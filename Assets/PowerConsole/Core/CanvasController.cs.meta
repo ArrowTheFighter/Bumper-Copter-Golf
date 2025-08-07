@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 0b88213b58190304db0494a0cb9b0f06
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 278762
+  packageName: Power Console
+  packageVersion: 1.0.0
+  assetPath: Assets/PowerConsole/Core/CanvasController.cs
+  uploadId: 648362

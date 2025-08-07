@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 0ed068b60cf043249be5677d5960315a
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 278762
+  packageName: Power Console
+  packageVersion: 1.0.0
+  assetPath: Assets/PowerConsole/Prefabs/PowerConsole.prefab
+  uploadId: 648362

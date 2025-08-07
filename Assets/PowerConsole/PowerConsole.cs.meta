@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: f3f369472d847c448aba584de961661e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 278762
+  packageName: Power Console
+  packageVersion: 1.0.0
+  assetPath: Assets/PowerConsole/PowerConsole.cs
+  uploadId: 648362

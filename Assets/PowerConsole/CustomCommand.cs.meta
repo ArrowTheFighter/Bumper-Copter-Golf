@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: e1adf11a65c97ad48940bcf8b8aae99f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 278762
+  packageName: Power Console
+  packageVersion: 1.0.0
+  assetPath: Assets/PowerConsole/CustomCommand.cs
+  uploadId: 648362

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: e0d65d3ea6f230248b806f197b9f8109
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 278762
+  packageName: Power Console
+  packageVersion: 1.0.0
+  assetPath: Assets/PowerConsole/readme.txt
+  uploadId: 648362
