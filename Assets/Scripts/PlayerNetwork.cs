@@ -28,7 +28,10 @@ public class PlayerNetwork : NetworkBehaviour
     public float launchVelocity = 22f;
     public float chipAngle = 35.0f;
 
-
+    void OnNetworkInstantiate()
+    {
+        print("player spawned on network");
+    }
 
     void Start()
     {
@@ -38,7 +41,9 @@ public class PlayerNetwork : NetworkBehaviour
         if (IsOwner)
         {
             Camera.SetActive(true);
-         }
+            transform.position = LevelHandler.instance.GetSpawnPosition();
+        }
+
     }
 
     void Update()

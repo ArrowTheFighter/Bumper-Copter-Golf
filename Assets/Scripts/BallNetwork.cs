@@ -56,17 +56,18 @@ public class BallNetwork : NetworkBehaviour
             transform.position = lastPosition;
             inAir = false;
             //rb.linearDamping = groundDampening;
-            TimeWhenHitGround = Time.time;
-            fullDampTime = TimeWhenHitGround + 2f;
+            //fullDampTime = Time.time + dampTime;
 
         }
         else if (IsInLayerMask(collision.gameObject, ~groundIgnoreLayers))
         {
             print("hit ground");
+            if (inAir)
+            {
+                fullDampTime = Time.time + dampTime;
+            }
             inAir = false;
             //rb.linearDamping = groundDampening;
-            TimeWhenHitGround = Time.time;
-            fullDampTime = TimeWhenHitGround + 2f;
         }
     }
 
