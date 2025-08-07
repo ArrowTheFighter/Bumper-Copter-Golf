@@ -8,6 +8,8 @@ public class PlayerDroneModel : MonoBehaviour
     private GameObject hammerJointObj;
     private GameObject hammerObj;
     
+    private GameObject arcPivotObj;
+    
     public PlayerNetwork playerNetwork;
     
     public float aimLerpSpeed = 2.0f;
@@ -27,6 +29,8 @@ public class PlayerDroneModel : MonoBehaviour
         hammerObj = transform.Find("Hammer").gameObject;
         hammerHomeRotation = hammerObj.transform.localRotation;
         hammerHomeRotation *= Quaternion.Euler(0, 180, 0);
+        
+        arcPivotObj = playerNetwork.transform.Find("ArcPivot").gameObject;
     }
 
     // Update is called once per frame
@@ -79,6 +83,7 @@ public class PlayerDroneModel : MonoBehaviour
         aimAngle = Mathf.MoveTowardsAngle(aimAngle, targetAimAngle, Time.fixedDeltaTime * 360.0f * aimLerpSpeed);
         hammerJointObj.transform.localRotation = Quaternion.Euler(0, aimAngle, 0) * jointHomeRotation;
         hammerObj.transform.localRotation = Quaternion.Euler(0, aimAngle, 0) * hammerHomeRotation;
+        arcPivotObj.transform.localRotation = Quaternion.Euler(0, aimAngle, 0);
     }
     
     private Quaternion CalculateTilt(Quaternion currentRotation, Vector3 newUpVector, float timeDelta)
