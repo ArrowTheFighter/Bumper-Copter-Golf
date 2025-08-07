@@ -860,6 +860,10 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6057717266603466495, guid: 9a0ef1f53833d2244b1f414d4666a278, type: 3}
+      propertyPath: m_Name
+      value: HammerHead
+      objectReference: {fileID: 0}
     - target: {fileID: -5568371526223589888, guid: 9a0ef1f53833d2244b1f414d4666a278, type: 3}
       propertyPath: m_Name
       value: HammerJoint
@@ -926,6 +930,9 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9a0ef1f53833d2244b1f414d4666a278, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 7068311159113539372}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9a0ef1f53833d2244b1f414d4666a278, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 618450456216341475}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9a0ef1f53833d2244b1f414d4666a278, type: 3}
       insertIndex: -1
@@ -936,6 +943,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9a0ef1f53833d2244b1f414d4666a278, type: 3}
   m_PrefabInstance: {fileID: 2890201888808930227}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7068311159113539372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2656392192256620258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab64055a1b353444ea1f173f8c343a0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorNum: 0
 --- !u!114 &618450456216341475
 MonoBehaviour:
   m_ObjectHideFlags: 0
