@@ -452,8 +452,11 @@ MonoBehaviour:
   droneModel: {fileID: 618450456216341475}
   aimFollowsCamera: 1
   aimAngle: 0
+  launchStrength: 3
   launchVelocity: 22
   chipAngle: 35
+  maxLaunchStrength: 5.8
+  launchStrengthIncrement: 0.9
 --- !u!114 &3066865759064976753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1107,9 +1110,9 @@ MonoBehaviour:
   settings:
     launchAngle: 35.6
     initialSpeed: 22
-    stripLength: 27
-    stripWidth: 0.25
-    alpha: 0.8
+    stripLength: 16
+    stripWidth: 1.5
+    alpha: 0.671
     trajectoryColor: {r: 0.7830189, g: 0.53032774, b: 0.2031417, a: 1}
   meshRenderer: {fileID: 6507966900802810896}
   meshFilter: {fileID: 0}

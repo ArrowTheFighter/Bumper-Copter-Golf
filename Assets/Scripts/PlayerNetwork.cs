@@ -30,8 +30,13 @@ public class PlayerNetwork : NetworkBehaviour
     
     public bool aimFollowsCamera = true;
     public float aimAngle = 0f;
+
+    public float launchStrength = 3f;
     public float launchVelocity = 22f;
     public float chipAngle = 35.0f;
+    
+    [SerializeField] float maxLaunchStrength = 5.8f;
+    [SerializeField] float launchStrengthIncrement = 0.3f;
 
 
     void Start()
@@ -170,6 +175,25 @@ public class PlayerNetwork : NetworkBehaviour
             if (Time.time > jumpCooldown) CanJump = true;
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, Mathf.Lerp(rb.linearVelocity.y, 0, 0.1f), rb.linearVelocity.z);
         }
+        
+        LaunchStrengthUpdate();
+    }
+    
+    void LaunchStrengthUpdate() {
+        
+        float scrollAmount = Input.GetAxis("Mouse ScrollWheel");
+        
+        float oldLaunchStrength = launchStrength;
+        
+        launchStrength += scrollAmount * launchStrengthIncrement;
+        launchStrength = Mathf.Clamp(launchStrength, 0, maxLaunchStrength);
+        
+        if (oldLaunchStrength != launchStrength) {
+            Debug.Log("Launch strength: " + launchStrength);
+        }
+        
+        launchVelocity = Mathf.Sqrt(launchStrength) * 10;
+
     }
 
     void Jump()
