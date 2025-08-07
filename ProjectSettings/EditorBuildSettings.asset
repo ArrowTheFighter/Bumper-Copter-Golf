@@ -6,17 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
-    path: Assets/Scenes/golf_course_terrain_TEST1.unity
-    guid: 1bf71d7172745ee4e98019cc7c435a7b
-  - enabled: 1
-    path: Assets/Scenes/c_golf_course_terrain_TEST.unity
-    guid: 4cd57b2a1832e61459f8b5fc0fa25885
-  - enabled: 1
     path: Assets/Scenes/LobbyScene.unity
     guid: 21a3ec24cca959f4cb34e3ede2ea3803
+  - enabled: 1
+    path: Assets/Scenes/GameScene.unity
+    guid: 4001ce043d0ed0a44a2369428700635d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -1,4 +1,5 @@
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LevelHandler : MonoBehaviour
@@ -20,16 +21,21 @@ public class LevelHandler : MonoBehaviour
 
     void Start()
     {
-        foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+        if (NetworkManager.Singleton.IsServer)
         {
-            GameObject player = Instantiate(playerPrefab);
-            player.GetComponent<NetworkObject>().SpawnAsPlayerObject(client.ClientId);
-         }   
+            foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+            {
+                GameObject player = Instantiate(playerPrefab);
+                player.GetComponent<NetworkObject>().SpawnAsPlayerObject(client.ClientId);
+            }
+        }
+          
     }
 
     public Vector3 GetSpawnPosition()
     {
-        return startPos.position;
+        Vector3 randompos = new Vector3(startPos.position.x + Random.Range(-3f, 3f), startPos.position.y, startPos.position.z + Random.Range(-3f, 3f));
+        return randompos;
     }
 
     public Vector3 GetBallSpawnPosition()
