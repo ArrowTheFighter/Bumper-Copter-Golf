@@ -10,6 +10,8 @@ public class PlayerDroneModel : MonoBehaviour
     
     public PlayerNetwork playerNetwork;
     
+    public float aimLerpSpeed = 2.0f;
+    
     private float aimAngle = 0f;
     
     //private GameObject cameraObj;
@@ -69,13 +71,14 @@ public class PlayerDroneModel : MonoBehaviour
 
         aimVector.y = 0;
         aimVector = aimVector.normalized;
+        float targetAimAngle = aimAngle;
         if (aimVector.magnitude > 0.01f) {
-            aimAngle = Mathf.Atan2(aimVector.x, aimVector.z);
+            targetAimAngle = Mathf.Atan2(aimVector.x, aimVector.z) * 180 / Mathf.PI;
         }
         
-        float lerpToAngle = Mathf.LerpAngle(hammerJointObj.transform.localRotation.eulerAngles.y, aimAngle * 180 / Mathf.PI, Time.fixedDeltaTime * 3.0f);
-        hammerJointObj.transform.localRotation = Quaternion.Euler(0, lerpToAngle, 0) * jointHomeRotation;
-        hammerObj.transform.localRotation = hammerHomeRotation * Quaternion.Euler(0, lerpToAngle, 0);
+        aimAngle = Mathf.MoveTowardsAngle(aimAngle, targetAimAngle, Time.fixedDeltaTime * 360.0f * aimLerpSpeed);
+        hammerJointObj.transform.localRotation = Quaternion.Euler(0, aimAngle, 0) * jointHomeRotation;
+        hammerObj.transform.localRotation = Quaternion.Euler(0, aimAngle, 0) * hammerHomeRotation;
     }
     
     private Quaternion CalculateTilt(Quaternion currentRotation, Vector3 newUpVector, float timeDelta)
