@@ -21,6 +21,10 @@ public class PlayerNetwork : NetworkBehaviour
     bool CanJump = true;
     bool Jumping;
     float jumpCooldown;
+    
+    public float aimAngle = 0f;
+    public float launchVelocity = 22f;
+    public float chipAngle = 35.0f;
 
 
 
@@ -147,10 +151,10 @@ public class PlayerNetwork : NetworkBehaviour
         {
             if (hitInfo.collider.TryGetComponent(out BallNetwork ballNetwork))
             {
-                Vector3 forwardDir = Camera.transform.forward;
-                forwardDir.y = 0;
-                Vector3 hitForce = new Vector3(forwardDir.x * 15, 3 * Random.Range(1, 2f), forwardDir.z * 15);
-                ballNetwork.HitBallServerRpc(hitForce);
+                Vector3 forwardDir = Quaternion.Euler(0, aimAngle, 0) * Vector3.forward;
+                Vector3 launchImpulse = Quaternion.Euler(chipAngle, 0, 0) * (forwardDir * launchVelocity);
+                Debug.Log("launch impulse: " + launchImpulse);
+                ballNetwork.HitBallServerRpc(launchImpulse);
             }
         }
      }

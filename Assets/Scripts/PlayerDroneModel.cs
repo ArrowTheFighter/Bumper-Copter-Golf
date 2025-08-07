@@ -14,7 +14,6 @@ public class PlayerDroneModel : MonoBehaviour
     
     public float aimLerpSpeed = 2.0f;
     
-    private float aimAngle = 0f;
     
     //private GameObject cameraObj;
     
@@ -32,8 +31,12 @@ public class PlayerDroneModel : MonoBehaviour
         
         arcPivotObj = playerNetwork.transform.Find("ArcPivot").gameObject;
     }
+    
+    void Update()
+    {
+        arcPivotObj.GetComponent<TrajectoryPreview>().ShowTrajectory(playerNetwork.chipAngle, playerNetwork.launchVelocity);
+    }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         if (!playerNetwork.IsOwner) return;
@@ -75,15 +78,15 @@ public class PlayerDroneModel : MonoBehaviour
 
         aimVector.y = 0;
         aimVector = aimVector.normalized;
-        float targetAimAngle = aimAngle;
+        float targetAimAngle = playerNetwork.aimAngle;
         if (aimVector.magnitude > 0.01f) {
             targetAimAngle = Mathf.Atan2(aimVector.x, aimVector.z) * 180 / Mathf.PI;
         }
         
-        aimAngle = Mathf.MoveTowardsAngle(aimAngle, targetAimAngle, Time.fixedDeltaTime * 360.0f * aimLerpSpeed);
-        hammerJointObj.transform.localRotation = Quaternion.Euler(0, aimAngle, 0) * jointHomeRotation;
-        hammerObj.transform.localRotation = Quaternion.Euler(0, aimAngle, 0) * hammerHomeRotation;
-        arcPivotObj.transform.localRotation = Quaternion.Euler(0, aimAngle, 0);
+        playerNetwork.aimAngle = Mathf.MoveTowardsAngle(playerNetwork.aimAngle, targetAimAngle, Time.fixedDeltaTime * 360.0f * aimLerpSpeed);
+        hammerJointObj.transform.localRotation = Quaternion.Euler(0, playerNetwork.aimAngle, 0) * jointHomeRotation;
+        hammerObj.transform.localRotation = Quaternion.Euler(0, playerNetwork.aimAngle, 0) * hammerHomeRotation;
+        arcPivotObj.transform.localRotation = Quaternion.Euler(0, playerNetwork.aimAngle, 0);
     }
     
     private Quaternion CalculateTilt(Quaternion currentRotation, Vector3 newUpVector, float timeDelta)
