@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#
 read WIDTH < <(identify -format "%w" "$1")
 
 NEW_SZ=$(( WIDTH + 1 ))
@@ -12,4 +12,4 @@ convert "$1" \
   -gravity northwest \
   -background black \
   -extent "${NEW_SZ}x${NEW_SZ}" \
-  gray:heightmap.raw
+  gray:heightmap_2nd.raw

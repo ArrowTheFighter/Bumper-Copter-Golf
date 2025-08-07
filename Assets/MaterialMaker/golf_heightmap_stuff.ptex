@@ -97,12 +97,6 @@
 			"to_port": 0
 		},
 		{
-			"from": "splines",
-			"from_port": 0,
-			"to": "blend2_2",
-			"to_port": 1
-		},
-		{
 			"from": "gaussian_blur",
 			"from_port": 0,
 			"to": "colormap",
@@ -157,12 +151,6 @@
 			"to_port": 0
 		},
 		{
-			"from": "gradient_2",
-			"from_port": 0,
-			"to": "splines",
-			"to_port": 0
-		},
-		{
 			"from": "uniform_greyscale_3",
 			"from_port": 0,
 			"to": "blend2_2",
@@ -191,11 +179,47 @@
 			"from_port": 0,
 			"to": "colormap",
 			"to_port": 1
+		},
+		{
+			"from": "gradient_2",
+			"from_port": 0,
+			"to": "reroute",
+			"to_port": 0
+		},
+		{
+			"from": "reroute",
+			"from_port": 0,
+			"to": "splines",
+			"to_port": 0
+		},
+		{
+			"from": "reroute",
+			"from_port": 0,
+			"to": "splines_2",
+			"to_port": 0
+		},
+		{
+			"from": "splines",
+			"from_port": 0,
+			"to": "switch",
+			"to_port": 0
+		},
+		{
+			"from": "switch",
+			"from_port": 0,
+			"to": "blend2_2",
+			"to_port": 1
+		},
+		{
+			"from": "splines_2",
+			"from_port": 0,
+			"to": "switch",
+			"to_port": 2
 		}
 	],
 	"label": "Graph",
 	"longdesc": "",
-	"name": "@Node@817",
+	"name": "_Node_817",
 	"node_position": {
 		"x": 0.0,
 		"y": 0.0
@@ -225,7 +249,7 @@
 				"metallic": 0.0,
 				"normal": 1.0,
 				"roughness": 1.0,
-				"size": 11,
+				"size": 11.0,
 				"sss": 1.0
 			},
 			"seed_int": 0,
@@ -482,8 +506,8 @@
 			"parameters": {
 				"amount1": 1.0,
 				"amount2": 1.0,
-				"blend_type1": 0,
-				"blend_type2": 9
+				"blend_type1": 0.0,
+				"blend_type2": 9.0
 			},
 			"seed_int": 0,
 			"type": "blend2"
@@ -528,7 +552,7 @@
 			"parameters": {
 				"edge": 0.6,
 				"radius": 0.77,
-				"shape": 1,
+				"shape": 1.0,
 				"sides": 5.0
 			},
 			"seed_int": 0,
@@ -537,8 +561,8 @@
 		{
 			"name": "splines",
 			"node_position": {
-				"x": -2170.52685546875,
-				"y": 18.626895904541
+				"x": -2246.7041015625,
+				"y": -101.839302062988
 			},
 			"parameters": {
 				"splines": {
@@ -627,7 +651,7 @@
 				"y": -70.0329360961914
 			},
 			"parameters": {
-				"param0": 11,
+				"param0": 11.0,
 				"param1": 421.4,
 				"param2": 0.0,
 				"param3": false
@@ -639,12 +663,12 @@
 			"generic_size": 1,
 			"name": "blend2_2",
 			"node_position": {
-				"x": -2006.6376953125,
-				"y": -174.225616455078
+				"x": -1925.44677734375,
+				"y": -175.556610107422
 			},
 			"parameters": {
 				"amount1": 1.0,
-				"blend_type1": 0
+				"blend_type1": 0.0
 			},
 			"seed_int": 0,
 			"type": "blend2"
@@ -656,7 +680,7 @@
 				"y": 118.461601257324
 			},
 			"parameters": {
-				"param0": 11,
+				"param0": 11.0,
 				"param1": 437.9,
 				"param2": 0.0,
 				"param3": false
@@ -726,7 +750,7 @@
 				"clamp": false,
 				"default_in1": 0.0,
 				"default_in2": 0.5,
-				"op": 2
+				"op": 2.0
 			},
 			"seed_int": 0,
 			"type": "math"
@@ -986,6 +1010,113 @@
 			},
 			"seed_int": 0,
 			"type": "gradient"
+		},
+		{
+			"name": "splines_2",
+			"node_position": {
+				"x": -2256.28466796875,
+				"y": 39.6170425415039
+			},
+			"parameters": {
+				"splines": {
+					"point_groups": [],
+					"type": "Splines",
+					"values": [
+						0.890350759029388,
+						0.16390997171402,
+						0.0700542479753494,
+						0.0,
+						0.713901996612549,
+						0.194034263491631,
+						0.0400271229445934,
+						0.0,
+						0.475791811943054,
+						0.42576140165329,
+						0.0512872971594334,
+						0.0,
+						0.665791869163513,
+						0.319912314414978,
+						0.0813144221901894,
+						0.0,
+						0.501260757446289,
+						0.706376910209656,
+						0.0813144221901894,
+						0.0,
+						0.607286930084229,
+						0.723951995372772,
+						0.0963279828429222,
+						0.0,
+						0.728320360183716,
+						0.631012201309204,
+						0.0813144221901894,
+						0.0,
+						0.717950403690338,
+						0.573152720928192,
+						0.062547467648983,
+						0.0,
+						0.356753677129745,
+						0.843979120254517,
+						0.062547467648983,
+						0.0,
+						0.333435267210007,
+						0.835473001003265,
+						0.0587940737605095,
+						0.0,
+						0.274076640605927,
+						0.805152654647827,
+						0.0975881516933441,
+						0.0,
+						0.20906862616539,
+						0.787652790546417,
+						0.103834763169289,
+						0.0,
+						0.343109279870987,
+						0.545048594474792,
+						0.017506780102849,
+						0.0,
+						0.384187370538712,
+						0.539180278778076,
+						0.017506780102849,
+						0.0,
+						0.350946754217148,
+						0.557842135429382,
+						0.017506780102849,
+						0.0,
+						0.350946754217148,
+						0.557842135429382,
+						0.017506780102849,
+						0.0
+					]
+				}
+			},
+			"seed_int": 0,
+			"type": "splines"
+		},
+		{
+			"name": "reroute",
+			"node_position": {
+				"x": -2418.51318359375,
+				"y": 6.39126825332642
+			},
+			"parameters": {
+				"preview": 0
+			},
+			"seed_int": 0,
+			"type": "reroute"
+		},
+		{
+			"name": "switch",
+			"node_position": {
+				"x": -2069.791015625,
+				"y": -92.102783203125
+			},
+			"parameters": {
+				"choices": 2,
+				"outputs": 2,
+				"source": 1.0
+			},
+			"seed_int": 0,
+			"type": "switch"
 		}
 	],
 	"parameters": {
