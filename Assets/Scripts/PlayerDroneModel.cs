@@ -29,7 +29,23 @@ public class PlayerDroneModel : MonoBehaviour
         hammerHomeRotation = hammerObj.transform.localRotation;
         hammerHomeRotation *= Quaternion.Euler(0, 180, 0);
         
-        //arcPivotObj = playerNetwork.transform.Find("ArcPivot").gameObject;
+        Invoke("UpdateHammerColor", 0.1f);
+    }
+    
+    private void UpdateHammerColor() {
+        Debug.Log("Updating hammer color");
+        var hammerHeadMat = hammerObj.transform.Find("HammerHead").GetComponent<MeshRenderer>().material;
+        if (hammerHeadMat) {
+            if (hammerHeadMat.HasColor("_BaseColor") && GetComponent<PlayerColor>() != null) {
+                Debug.Log("Setting hammer _BaseColor to " + GetComponent<PlayerColor>().GetColor());
+                hammerHeadMat.SetColor("_BaseColor", GetComponent<PlayerColor>().GetColor());
+                Debug.Log("Color set to " + hammerHeadMat.GetColor("_BaseColor"));
+            } else {
+                Debug.LogError("No color found for hammer head material");
+            }
+        } else {
+            Debug.LogError("No hammer head material found");
+        }
     }
     
     void Update()

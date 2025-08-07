@@ -18,6 +18,15 @@ public class BallNetwork : NetworkBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        
+        Invoke("UpdateBallColor", 0.1f);
+    }
+    
+    private void UpdateBallColor() {
+        Material mat = GetComponent<MeshRenderer>().material;
+        if (mat.HasColor("_BaseColor") && GetComponent<PlayerColor>() != null) {
+            mat.SetColor("_BaseColor", GetComponent<PlayerColor>().GetColor());
+        }
     }
 
     // Update is called once per frame
