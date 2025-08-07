@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerDroneModel : MonoBehaviour
@@ -19,6 +20,13 @@ public class PlayerDroneModel : MonoBehaviour
     
     private Quaternion jointHomeRotation;
     private Quaternion hammerHomeRotation;
+    
+    private bool hammerSwinging = false;
+    private float hammerSwingAmount = 0.0f;
+    private float hammerSwingSpeed = 3.4f;
+    private float hammerSwingProgress = 0f;
+    private float hammerSwingFullAngle = -150f;
+
 
     void Start()
     {
@@ -56,6 +64,10 @@ public class PlayerDroneModel : MonoBehaviour
     void FixedUpdate()
     {
         if (!playerNetwork.IsOwner) return;
+        
+        if (hammerSwinging) {
+            hammerSwingUpdate();
+        }
         
         Vector3 upVec = Vector3.up;
         if (playerNetwork.lastVel.magnitude > 0.05f) {
@@ -105,8 +117,29 @@ public class PlayerDroneModel : MonoBehaviour
         
         playerNetwork.aimAngle = Mathf.MoveTowardsAngle(playerNetwork.aimAngle, targetAimAngle, Time.fixedDeltaTime * 360.0f * aimLerpSpeed);
         hammerJointObj.transform.localRotation = Quaternion.Euler(0, playerNetwork.aimAngle, 0) * jointHomeRotation;
-        hammerObj.transform.localRotation = Quaternion.Euler(0, playerNetwork.aimAngle, 0) * hammerHomeRotation;
         arcPivotObj.transform.localRotation = Quaternion.Euler(0, playerNetwork.aimAngle, 0);
+
+        hammerObj.transform.localRotation = Quaternion.Euler(hammerSwingAmount * hammerSwingFullAngle, 0, 0) * hammerHomeRotation;
+        hammerObj.transform.localRotation = Quaternion.Euler(0, playerNetwork.aimAngle, 0) * hammerObj.transform.localRotation;
+    }
+    
+    private void hammerSwingUpdate() {
+        hammerSwingProgress += Time.fixedDeltaTime * hammerSwingSpeed;
+        if (hammerSwingProgress < 0.5f) {
+            hammerSwingAmount = easeOutPow(hammerSwingProgress * 2f, 4);
+        } else {
+            hammerSwingAmount = 1f - Mathf.Lerp(0, 1, (hammerSwingProgress - 0.5f) * 2f);
+        }
+        
+        if (hammerSwingProgress >= 1) {
+            hammerSwingProgress = 0f;
+            hammerSwingAmount = 0f;
+            hammerSwinging = false;
+        }
+    }
+    
+    private float easeOutPow(float x, int power) {
+        return 1 - Mathf.Pow(1 - x, power);
     }
     
     private Quaternion CalculateTilt(Quaternion currentRotation, Vector3 newUpVector, float timeDelta)
@@ -118,5 +151,10 @@ public class PlayerDroneModel : MonoBehaviour
         var targetRotation = Quaternion.LookRotation(targetForward, newUpVector);
 
         return Quaternion.Slerp(currentRotation, targetRotation, timeDelta * 3.0f);
+    }
+    
+    public void SwingHammer() {
+        hammerSwingAmount = 0f;
+        hammerSwinging = true;
     }
 }

@@ -449,6 +449,7 @@ MonoBehaviour:
   BallObject: {fileID: 0}
   rb: {fileID: 0}
   lastVel: {x: 0, y: 0, z: 0}
+  droneModel: {fileID: 618450456216341475}
   aimFollowsCamera: 1
   aimAngle: 0
   launchVelocity: 22

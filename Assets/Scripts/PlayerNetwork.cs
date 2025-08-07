@@ -25,6 +25,8 @@ public class PlayerNetwork : NetworkBehaviour
     bool Jumping;
     float jumpCooldown;
     
+    public PlayerDroneModel droneModel;
+    
     
     public bool aimFollowsCamera = true;
     public float aimAngle = 0f;
@@ -193,6 +195,10 @@ public class PlayerNetwork : NetworkBehaviour
                 Vector3 launchImpulse = Quaternion.Euler(0, aimAngle, 0) * (upForwardVector * launchVelocity);
                 ballNetwork.HitBallServerRpc(launchImpulse);
             }
+        }
+        
+        if (droneModel != null) {
+            droneModel.SwingHammer();
         }
      }
 
