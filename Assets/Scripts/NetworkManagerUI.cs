@@ -12,6 +12,7 @@ public class NetworkManagerUI : MonoBehaviour
     {
         startHostButton.onClick.AddListener(() =>
         {
+            print("starting host");
             NetworkManager.Singleton.StartHost();
             HideButtons();
         });
