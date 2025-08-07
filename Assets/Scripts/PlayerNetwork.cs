@@ -9,6 +9,7 @@ public class PlayerNetwork : NetworkBehaviour
     [SerializeField] float maxSpeed = 20;
     [SerializeField] float hoverForce = 100;
     [SerializeField] float jumpForce = 100;
+    [SerializeField] float jumpDownForce = 10;
     [SerializeField] float groundHeight;
     [SerializeField] LayerMask groundIgnore;
     [SerializeField] LayerMask BallLayer;
@@ -18,6 +19,8 @@ public class PlayerNetwork : NetworkBehaviour
     NetworkObject networkObject;
     float bounceCooldown;
     bool CanJump = true;
+    bool Jumping;
+    float jumpCooldown;
 
 
 
@@ -34,6 +37,7 @@ public class PlayerNetwork : NetworkBehaviour
 
     void Update()
     {
+        if (!IsOwner) return;
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.LeftShift))
         {
             TryHitBall();
@@ -85,10 +89,31 @@ public class PlayerNetwork : NetworkBehaviour
         {
             rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
         }
-
-        if (Physics.Raycast(transform.position, Vector3.down, groundHeight, ~groundIgnore))
+        
+        if (Jumping && Time.time < jumpCooldown)
         {
-            CanJump = true;
+            if (rb.linearVelocity.y > 0.01f)
+            {
+                print("adding jump down force");
+                rb.AddForce(Vector3.down * jumpDownForce * Time.deltaTime);
+            }
+        }
+        else if (Jumping && Time.time > jumpCooldown)
+        {
+            if (rb.linearVelocity.y > 0.01f)
+            {
+                print("adding jump down force");
+                rb.AddForce(Vector3.down * jumpDownForce * Time.deltaTime);
+            }
+            else
+            {
+                print("finishing jump down force");
+                Jumping = false;
+            }
+        }
+        else if (Physics.Raycast(transform.position, Vector3.down, groundHeight, ~groundIgnore))
+        {
+            if (Time.time > jumpCooldown) CanJump = true;
             rb.AddForce(Vector3.up * hoverForce * Time.deltaTime);
         }
         else if (!Physics.Raycast(transform.position, Vector3.down, groundHeight + .2f, ~groundIgnore))
@@ -97,6 +122,7 @@ public class PlayerNetwork : NetworkBehaviour
         }
         else
         {
+            if (Time.time > jumpCooldown) CanJump = true;
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, Mathf.Lerp(rb.linearVelocity.y, 0, 0.1f), rb.linearVelocity.z);
         }
     }
@@ -104,8 +130,13 @@ public class PlayerNetwork : NetworkBehaviour
     void Jump()
     {
         if (!CanJump) return;
+        Vector3 vel = rb.linearVelocity;
+        vel.y = 0;
+        rb.linearVelocity = vel;
         rb.AddForce(Vector3.up * jumpForce * Time.deltaTime, ForceMode.Impulse);
         CanJump = false;
+        Jumping = true;
+        jumpCooldown = Time.time + 0.05f;
     }
 
     void TryHitBall()

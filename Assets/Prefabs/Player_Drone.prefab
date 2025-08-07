@@ -434,7 +434,8 @@ MonoBehaviour:
   speed: 2000
   maxSpeed: 10
   hoverForce: 1000
-  jumpForce: 500
+  jumpForce: 1600
+  jumpDownForce: 500
   groundHeight: 1.5
   groundIgnore:
     serializedVersion: 2
