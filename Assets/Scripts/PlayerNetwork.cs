@@ -11,9 +11,9 @@ public class PlayerNetwork : NetworkBehaviour
     [SerializeField] float groundHeight;
     [SerializeField] LayerMask groundIgnore;
     [SerializeField] LayerMask BallLayer;
-    [SerializeField] GameObject Camera;
-    Rigidbody rb;
-    Vector3 lastVel;
+    [SerializeField] public GameObject Camera;
+    public Rigidbody rb;
+    public Vector3 lastVel;
     NetworkObject networkObject;
     float bounceCooldown;
 

@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/golf_course_terrain_TEST1.unity
     guid: 1bf71d7172745ee4e98019cc7c435a7b
+  - enabled: 1
+    path: Assets/Scenes/c_golf_course_terrain_TEST.unity
+    guid: 4cd57b2a1832e61459f8b5fc0fa25885
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
