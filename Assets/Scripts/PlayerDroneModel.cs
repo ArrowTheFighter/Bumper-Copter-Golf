@@ -55,30 +55,34 @@ public class PlayerDroneModel : MonoBehaviour
             transform.localRotation = tilt;
         }
 
-        //lastVel = rb.linearVelocity;
-        float forwardInput = 0;
-        float rightInput = 0;
-        if (Input.GetKey(KeyCode.T)) {
-            forwardInput += 1f;
-        }
-        if (Input.GetKey(KeyCode.G)) {
-            forwardInput -= 1f;
-        }
-        if (Input.GetKey(KeyCode.F)) {
-            rightInput -= 1;
-        }
-        if (Input.GetKey(KeyCode.H)) {
-            rightInput += 1;
-        }
+        float targetAimAngle = playerNetwork.aimAngle;
+        Vector3 aimVector = Vector3.zero;
+        if (!playerNetwork.aimFollowsCamera) {
+            float forwardInput = 0;
+            float rightInput = 0;
+            if (Input.GetKey(KeyCode.T)) {
+                forwardInput += 1f;
+            }
+            if (Input.GetKey(KeyCode.G)) {
+                forwardInput -= 1f;
+            }
+            if (Input.GetKey(KeyCode.F)) {
+                rightInput -= 1;
+            }
+            if (Input.GetKey(KeyCode.H)) {
+                rightInput += 1;
+            }
 
-        Vector3 forwardDir = playerNetwork.Camera.transform.forward;
-        Vector3 forwardAmt = forwardDir.normalized * forwardInput;
-        Vector3 rightAmt = playerNetwork.Camera.transform.right * rightInput;
-        Vector3 aimVector = forwardAmt + rightAmt;
-
+            Vector3 forwardDir = playerNetwork.Camera.transform.forward;
+            Vector3 forwardAmt = forwardDir.normalized * forwardInput;
+            Vector3 rightAmt = playerNetwork.Camera.transform.right * rightInput;
+            aimVector = forwardAmt + rightAmt;
+        } else {
+            aimVector = playerNetwork.Camera.transform.forward;
+        }
         aimVector.y = 0;
         aimVector = aimVector.normalized;
-        float targetAimAngle = playerNetwork.aimAngle;
+
         if (aimVector.magnitude > 0.01f) {
             targetAimAngle = Mathf.Atan2(aimVector.x, aimVector.z) * 180 / Mathf.PI;
         }

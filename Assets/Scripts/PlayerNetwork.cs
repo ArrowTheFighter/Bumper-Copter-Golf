@@ -22,6 +22,8 @@ public class PlayerNetwork : NetworkBehaviour
     bool Jumping;
     float jumpCooldown;
     
+    
+    public bool aimFollowsCamera = true;
     public float aimAngle = 0f;
     public float launchVelocity = 22f;
     public float chipAngle = 35.0f;
