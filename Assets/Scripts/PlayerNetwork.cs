@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine.Animations;
+using Unity.Mathematics;
 
 public class PlayerNetwork : NetworkBehaviour
 {
@@ -14,6 +15,8 @@ public class PlayerNetwork : NetworkBehaviour
     [SerializeField] LayerMask groundIgnore;
     [SerializeField] LayerMask BallLayer;
     [SerializeField] public GameObject Camera;
+    public GameObject BallPrefab;
+    [HideInInspector] public GameObject BallObject;
     public Rigidbody rb;
     public Vector3 lastVel;
     NetworkObject networkObject;
@@ -28,10 +31,6 @@ public class PlayerNetwork : NetworkBehaviour
     public float launchVelocity = 22f;
     public float chipAngle = 35.0f;
 
-    void OnNetworkInstantiate()
-    {
-        print("player spawned on network");
-    }
 
     void Start()
     {
@@ -42,9 +41,42 @@ public class PlayerNetwork : NetworkBehaviour
         {
             Camera.SetActive(true);
             transform.position = LevelHandler.instance.GetSpawnPosition();
+            SpawnGolfBallServerRpc();
         }
-
     }
+
+    [ServerRpc]
+    void SpawnGolfBallServerRpc(ServerRpcParams rpcParams = default)
+    {
+        Vector3 ballPos = LevelHandler.instance.GetBallSpawnPosition();
+        Transform spawnedTransform = Instantiate(BallPrefab, ballPos, quaternion.identity).transform;
+
+        NetworkObject spawnedNetowrkObj = spawnedTransform.GetComponent<NetworkObject>();
+        spawnedNetowrkObj.Spawn(true);
+
+        ulong clientid = rpcParams.Receive.SenderClientId;
+        ReturnBallReferenceClientRpc(spawnedNetowrkObj.NetworkObjectId,
+        new ClientRpcParams { Send = new ClientRpcSendParams { TargetClientIds = new ulong[] { clientid } } });
+    }
+
+    [ClientRpc]
+    void ReturnBallReferenceClientRpc(ulong ballNetId, ClientRpcParams clientRpcParams = default)
+    {
+        if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(ballNetId, out var netObj))
+        {
+            // Store your reference here
+            GameObject myBall = netObj.gameObject;
+            BallObject = myBall;
+            if (myBall.TryGetComponent(out BallNetwork ballNetwork))
+            {
+                ballNetwork.playerNetwork = this;
+            }
+
+            // Example: save it in a local variable
+            Debug.Log("Ball reference received: " + myBall.name);
+        }
+    }
+
 
     void Update()
     {

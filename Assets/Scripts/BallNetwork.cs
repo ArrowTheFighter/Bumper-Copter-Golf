@@ -9,6 +9,7 @@ public class BallNetwork : NetworkBehaviour
     [SerializeField] LayerMask WaterLayer;
     [SerializeField] float groundDampening;
     [SerializeField] float dampTime = 2f;
+    public PlayerNetwork playerNetwork;
     float TimeWhenHitGround;
     float fullDampTime;
 

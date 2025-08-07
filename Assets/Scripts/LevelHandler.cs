@@ -5,6 +5,7 @@ public class LevelHandler : MonoBehaviour
     public static LevelHandler instance;
 
     public Transform startPos;
+    public Transform ballStartPos;
 
     void Awake()
     {
@@ -17,7 +18,12 @@ public class LevelHandler : MonoBehaviour
     public Vector3 GetSpawnPosition()
     {
         return startPos.position;
-     }
+    }
 
-    
+    public Vector3 GetBallSpawnPosition()
+    {
+        return ballStartPos.position;
+    }
+
+
 }

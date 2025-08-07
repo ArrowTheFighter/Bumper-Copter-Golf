@@ -445,6 +445,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   Camera: {fileID: 7285298646536954304}
+  BallPrefab: {fileID: 2185557510102880579, guid: 5954c46199dc32c47bae4fe97cf228ee, type: 3}
+  BallObject: {fileID: 0}
   rb: {fileID: 0}
   lastVel: {x: 0, y: 0, z: 0}
   aimFollowsCamera: 1
