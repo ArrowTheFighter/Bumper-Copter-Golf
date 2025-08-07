@@ -148,14 +148,12 @@ public class PlayerNetwork : NetworkBehaviour
     void TryHitBall()
     {
         if (!IsOwner) return;
-        print("trying to hit ball");
-        if (Physics.SphereCast(transform.position, 1, Vector3.down, out RaycastHit hitInfo, 2, BallLayer))
+        if (Physics.SphereCast(transform.position + Vector3.up, 1, Vector3.down, out RaycastHit hitInfo, 3, BallLayer))
         {
             if (hitInfo.collider.TryGetComponent(out BallNetwork ballNetwork))
             {
-                Vector3 forwardDir = Quaternion.Euler(0, aimAngle, 0) * Vector3.forward;
-                Vector3 launchImpulse = Quaternion.Euler(-chipAngle, 0, 0) * (forwardDir * launchVelocity);
-                Debug.Log("launch impulse: " + launchImpulse);
+                Vector3 upForwardVector = Quaternion.Euler(-chipAngle, 0, 0) * Vector3.forward;
+                Vector3 launchImpulse = Quaternion.Euler(0, aimAngle, 0) * (upForwardVector * launchVelocity);
                 ballNetwork.HitBallServerRpc(launchImpulse);
             }
         }

@@ -25,10 +25,9 @@ public class BallNetwork : NetworkBehaviour
     {
         if (!inAir)
         {
-            // float remainingTime = fullDampTime - Time.time;
-            // float dampPercent = remainingTime / dampTime;
-            // print(dampPercent);
-            // rb.linearDamping = Mathf.Lerp(groundDampening, 0, dampPercent);
+            float remainingTime = fullDampTime - Time.time;
+            float dampPercent = remainingTime / dampTime;
+            rb.linearDamping = Mathf.Lerp(groundDampening, 0, dampPercent);
         }
     }
 
@@ -38,6 +37,7 @@ public class BallNetwork : NetworkBehaviour
         print("getting hit");
         rb.linearDamping = 0;
         lastPosition = transform.position;
+        inAir = true;
         StartCoroutine(delayHit(hitVector));
     }
 
@@ -45,7 +45,6 @@ public class BallNetwork : NetworkBehaviour
     {
         yield return null;
         rb.linearVelocity = hitVector;
-        inAir = true;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -67,6 +66,7 @@ public class BallNetwork : NetworkBehaviour
             inAir = false;
             //rb.linearDamping = groundDampening;
             TimeWhenHitGround = Time.time;
+            fullDampTime = TimeWhenHitGround + 2f;
         }
     }
 
