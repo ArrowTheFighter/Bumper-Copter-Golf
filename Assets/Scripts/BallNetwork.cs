@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
+using System.Collections;
 
 public class BallNetwork : NetworkBehaviour
 {
@@ -7,6 +8,10 @@ public class BallNetwork : NetworkBehaviour
     [SerializeField] LayerMask groundIgnoreLayers;
     [SerializeField] LayerMask WaterLayer;
     [SerializeField] float groundDampening;
+    [SerializeField] float dampTime = 2f;
+    float TimeWhenHitGround;
+    float fullDampTime;
+
     bool inAir;
     Vector3 lastPosition;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -18,17 +23,29 @@ public class BallNetwork : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (!inAir)
+        {
+            // float remainingTime = fullDampTime - Time.time;
+            // float dampPercent = remainingTime / dampTime;
+            // print(dampPercent);
+            // rb.linearDamping = Mathf.Lerp(groundDampening, 0, dampPercent);
+        }
     }
 
     [ServerRpc(RequireOwnership = false)]
     public void HitBallServerRpc(Vector3 hitVector)
     {
         print("getting hit");
-        inAir = true;
-        rb.linearVelocity = hitVector;
         rb.linearDamping = 0;
         lastPosition = transform.position;
+        StartCoroutine(delayHit(hitVector));
+    }
+
+    IEnumerator delayHit(Vector3 hitVector)
+    {
+        yield return null;
+        rb.linearVelocity = hitVector;
+        inAir = true;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -39,17 +56,20 @@ public class BallNetwork : NetworkBehaviour
             rb.linearVelocity = Vector3.zero;
             transform.position = lastPosition;
             inAir = false;
-            rb.linearDamping = groundDampening;
+            //rb.linearDamping = groundDampening;
+            TimeWhenHitGround = Time.time;
+            fullDampTime = TimeWhenHitGround + 2f;
 
         }
         else if (IsInLayerMask(collision.gameObject, ~groundIgnoreLayers))
         {
             print("hit ground");
             inAir = false;
-            rb.linearDamping = groundDampening;
+            //rb.linearDamping = groundDampening;
+            TimeWhenHitGround = Time.time;
         }
-       
     }
+
 
     void OnTriggerEnter(Collider other)
     {

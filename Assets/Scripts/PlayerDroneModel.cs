@@ -8,7 +8,7 @@ public class PlayerDroneModel : MonoBehaviour
     private GameObject hammerJointObj;
     private GameObject hammerObj;
     
-    private GameObject arcPivotObj;
+    public GameObject arcPivotObj;
     
     public PlayerNetwork playerNetwork;
     
@@ -29,12 +29,12 @@ public class PlayerDroneModel : MonoBehaviour
         hammerHomeRotation = hammerObj.transform.localRotation;
         hammerHomeRotation *= Quaternion.Euler(0, 180, 0);
         
-        arcPivotObj = playerNetwork.transform.Find("ArcPivot").gameObject;
+        //arcPivotObj = playerNetwork.transform.Find("ArcPivot").gameObject;
     }
     
     void Update()
     {
-        arcPivotObj.GetComponent<TrajectoryPreview>().ShowTrajectory(playerNetwork.chipAngle, playerNetwork.launchVelocity);
+        arcPivotObj.GetComponentInChildren<TrajectoryPreview>().ShowTrajectory(playerNetwork.chipAngle, playerNetwork.launchVelocity);
     }
 
     void FixedUpdate()

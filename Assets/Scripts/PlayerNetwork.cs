@@ -152,7 +152,7 @@ public class PlayerNetwork : NetworkBehaviour
             if (hitInfo.collider.TryGetComponent(out BallNetwork ballNetwork))
             {
                 Vector3 forwardDir = Quaternion.Euler(0, aimAngle, 0) * Vector3.forward;
-                Vector3 launchImpulse = Quaternion.Euler(chipAngle, 0, 0) * (forwardDir * launchVelocity);
+                Vector3 launchImpulse = Quaternion.Euler(-chipAngle, 0, 0) * (forwardDir * launchVelocity);
                 Debug.Log("launch impulse: " + launchImpulse);
                 ballNetwork.HitBallServerRpc(launchImpulse);
             }

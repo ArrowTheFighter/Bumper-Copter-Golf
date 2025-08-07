@@ -447,6 +447,9 @@ MonoBehaviour:
   Camera: {fileID: 7285298646536954304}
   rb: {fileID: 0}
   lastVel: {x: 0, y: 0, z: 0}
+  aimAngle: 0
+  launchVelocity: 22
+  chipAngle: 35
 --- !u!114 &3066865759064976753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -942,6 +945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5fa97ad6b9e71c4e8e2567356c85dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arcPivotObj: {fileID: 9126909569402025836}
   playerNetwork: {fileID: 1118113531692257589}
   aimLerpSpeed: 2
 --- !u!114 &6444696890233561914
