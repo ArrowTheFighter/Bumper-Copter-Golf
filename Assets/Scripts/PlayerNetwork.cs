@@ -8,6 +8,7 @@ public class PlayerNetwork : NetworkBehaviour
     [SerializeField] float speed = 5;
     [SerializeField] float maxSpeed = 20;
     [SerializeField] float hoverForce = 100;
+    [SerializeField] float jumpForce = 100;
     [SerializeField] float groundHeight;
     [SerializeField] LayerMask groundIgnore;
     [SerializeField] LayerMask BallLayer;
@@ -16,6 +17,7 @@ public class PlayerNetwork : NetworkBehaviour
     public Vector3 lastVel;
     NetworkObject networkObject;
     float bounceCooldown;
+    bool CanJump = true;
 
 
 
@@ -32,9 +34,13 @@ public class PlayerNetwork : NetworkBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.LeftShift))
         {
             TryHitBall();
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Jump();
          }
     }
     // Update is called once per frame
@@ -82,17 +88,24 @@ public class PlayerNetwork : NetworkBehaviour
 
         if (Physics.Raycast(transform.position, Vector3.down, groundHeight, ~groundIgnore))
         {
-            print("adding up force");
+            CanJump = true;
             rb.AddForce(Vector3.up * hoverForce * Time.deltaTime);
         }
         else if (!Physics.Raycast(transform.position, Vector3.down, groundHeight + .2f, ~groundIgnore))
         {
-            rb.AddForce(Vector3.down * hoverForce * Time.deltaTime);
+            rb.AddForce(Vector3.down * hoverForce * 2 * Time.deltaTime);
         }
         else
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, Mathf.Lerp(rb.linearVelocity.y, 0, 0.1f), rb.linearVelocity.z);
         }
+    }
+
+    void Jump()
+    {
+        if (!CanJump) return;
+        rb.AddForce(Vector3.up * jumpForce * Time.deltaTime, ForceMode.Impulse);
+        CanJump = false;
     }
 
     void TryHitBall()
@@ -121,10 +134,10 @@ public class PlayerNetwork : NetworkBehaviour
             Vector3 FlatVel = currentVel;
             FlatVel.y = 0;
             rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
-            rb.AddForce(-FlatVel, ForceMode.Impulse);
+            rb.AddForce(-FlatVel * 2, ForceMode.Impulse);
             if (collision.gameObject.TryGetComponent(out NetworkObject hitNetworkObject))
             {
-                PlayerHitServerRpc(FlatVel.x, FlatVel.z, hitNetworkObject.OwnerClientId);
+                PlayerHitServerRpc(FlatVel.x * 2, FlatVel.z * 2, hitNetworkObject.OwnerClientId);
             }
             bounceCooldown = Time.time + 0.2f;
             // PlayerHitServerRpc();
