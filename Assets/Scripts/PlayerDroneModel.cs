@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -45,8 +46,8 @@ public class PlayerDroneModel : MonoBehaviour
         var hammerHeadMat = hammerObj.transform.Find("HammerHead").GetComponent<MeshRenderer>().material;
         if (hammerHeadMat) {
             if (hammerHeadMat.HasColor("_BaseColor") && GetComponent<PlayerColor>() != null) {
-                Debug.Log("Setting hammer _BaseColor to " + GetComponent<PlayerColor>().GetColor());
-                hammerHeadMat.SetColor("_BaseColor", GetComponent<PlayerColor>().GetColor());
+                Debug.Log("Setting hammer _BaseColor to " + GetComponent<PlayerColor>().GetColor(playerNetwork.OwnerClientId));
+                hammerHeadMat.SetColor("_BaseColor", GetComponent<PlayerColor>().GetColor(playerNetwork.OwnerClientId));
                 Debug.Log("Color set to " + hammerHeadMat.GetColor("_BaseColor"));
             } else {
                 Debug.LogError("No color found for hammer head material");
@@ -55,10 +56,31 @@ public class PlayerDroneModel : MonoBehaviour
             Debug.LogError("No hammer head material found");
         }
     }
-    
+
     void Update()
     {
-        arcPivotObj.GetComponentInChildren<TrajectoryPreview>().ShowTrajectory(playerNetwork.chipAngle, playerNetwork.launchVelocity);
+        if (playerNetwork.chargingShot)
+        {
+
+            arcPivotObj.GetComponentInChildren<TrajectoryPreview>().ShowTrajectory(playerNetwork.chipAngle, playerNetwork.launchVelocity);
+            if (!arcPivotObj.activeInHierarchy)
+            {
+                StartCoroutine(delayShotShow());
+            }
+        }
+        else
+        {
+            arcPivotObj.SetActive(false);
+        }
+    }
+
+    IEnumerator delayShotShow()
+    {
+        yield return null;
+        if (!arcPivotObj.activeInHierarchy)
+        {
+            arcPivotObj.SetActive(true);
+        }
     }
 
     void FixedUpdate()

@@ -23,6 +23,7 @@ public class PlayerColor : MonoBehaviour
     }
     
     public Color GetColor() { return colors[colorNum]; }
+    public Color GetColor(ulong id) { return colors[id]; }
     void Start() { }
 
 }

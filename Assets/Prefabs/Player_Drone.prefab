@@ -432,8 +432,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  speed: 2000
-  maxSpeed: 10
+  speed: 2200
+  maxSpeed: 16
   hoverForce: 1000
   jumpForce: 1600
   jumpDownForce: 500
@@ -449,13 +449,14 @@ MonoBehaviour:
   BallObject: {fileID: 0}
   rb: {fileID: 0}
   lastVel: {x: 0, y: 0, z: 0}
+  chargingShot: 0
   droneModel: {fileID: 618450456216341475}
   aimFollowsCamera: 1
   aimAngle: 0
   launchStrength: 3
   launchVelocity: 22
   chipAngle: 35
-  maxLaunchStrength: 5.8
+  maxLaunchStrength: 10
   launchStrengthIncrement: 0.9
 --- !u!114 &3066865759064976753
 MonoBehaviour:
@@ -482,7 +483,7 @@ MonoBehaviour:
   ScaleLerpSmoothing: 1
   ScaleMaxInterpolationTime: 0.1
   AuthorityMode: 1
-  TickSyncChildren: 0
+  TickSyncChildren: 1
   UseUnreliableDeltas: 0
   SyncPositionX: 1
   SyncPositionY: 1
@@ -785,6 +786,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4298856343373965251}
+  - component: {fileID: 8985214142581521874}
   m_Layer: 0
   m_Name: ArcPivot
   m_TagString: Untagged
@@ -808,6 +810,52 @@ Transform:
   - {fileID: 5340105560291676031}
   m_Father: {fileID: 6659490711895477598}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &8985214142581521874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9126909569402025836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 0
+  AutoOwnerAuthorityTickOffset: 1
+  PositionInterpolationType: 0
+  RotationInterpolationType: 0
+  ScaleInterpolationType: 0
+  PositionLerpSmoothing: 1
+  PositionMaxInterpolationTime: 0.1
+  RotationLerpSmoothing: 1
+  RotationMaxInterpolationTime: 0.1
+  ScaleLerpSmoothing: 1
+  ScaleMaxInterpolationTime: 0.1
+  AuthorityMode: 1
+  TickSyncChildren: 0
+  UseUnreliableDeltas: 0
+  SyncPositionX: 0
+  SyncPositionY: 0
+  SyncPositionZ: 0
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  SwitchTransformSpaceWhenParented: 0
+  Interpolate: 1
+  SlerpPosition: 0
 --- !u!1001 &2890201888808930227
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -941,6 +989,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9a0ef1f53833d2244b1f414d4666a278, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6444696890233561914}
+    - targetCorrespondingSourceObject: {fileID: -7640558969779515294, guid: 9a0ef1f53833d2244b1f414d4666a278, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5036755160619080948}
   m_SourcePrefab: {fileID: 100100000, guid: 9a0ef1f53833d2244b1f414d4666a278, type: 3}
 --- !u!1 &2656392192256620258 stripped
 GameObject:
@@ -1026,6 +1077,57 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9a0ef1f53833d2244b1f414d4666a278, type: 3}
   m_PrefabInstance: {fileID: 2890201888808930227}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4461738295889533905 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7640558969779515294, guid: 9a0ef1f53833d2244b1f414d4666a278, type: 3}
+  m_PrefabInstance: {fileID: 2890201888808930227}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5036755160619080948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4461738295889533905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 0
+  AutoOwnerAuthorityTickOffset: 1
+  PositionInterpolationType: 0
+  RotationInterpolationType: 0
+  ScaleInterpolationType: 0
+  PositionLerpSmoothing: 1
+  PositionMaxInterpolationTime: 0.1
+  RotationLerpSmoothing: 1
+  RotationMaxInterpolationTime: 0.1
+  ScaleLerpSmoothing: 1
+  ScaleMaxInterpolationTime: 0.1
+  AuthorityMode: 1
+  TickSyncChildren: 0
+  UseUnreliableDeltas: 0
+  SyncPositionX: 0
+  SyncPositionY: 0
+  SyncPositionZ: 0
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  SwitchTransformSpaceWhenParented: 0
+  Interpolate: 1
+  SlerpPosition: 0
 --- !u!1001 &5589359438654564500
 PrefabInstance:
   m_ObjectHideFlags: 0

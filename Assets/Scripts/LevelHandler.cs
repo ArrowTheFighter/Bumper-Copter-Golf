@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -10,6 +11,8 @@ public class LevelHandler : MonoBehaviour
     public Transform ballStartPos;
 
     public GameObject playerPrefab;
+    public TextMeshProUGUI score;
+    public GameObject[] GoalNets;
 
     void Awake()
     {
@@ -29,7 +32,7 @@ public class LevelHandler : MonoBehaviour
                 player.GetComponent<NetworkObject>().SpawnAsPlayerObject(client.ClientId);
             }
         }
-          
+
     }
 
     public Vector3 GetSpawnPosition()
@@ -41,6 +44,18 @@ public class LevelHandler : MonoBehaviour
     public Vector3 GetBallSpawnPosition()
     {
         return ballStartPos.position;
+    }
+
+    [ServerRpc]
+    public void DisableGoalServerRpc(ushort goalID)
+    {
+        DisableGoalClientRpc(goalID);
+    }
+
+    [ClientRpc]
+    public void DisableGoalClientRpc(ushort goalId)
+    {
+        GoalNets[goalId].transform.parent.gameObject.SetActive(false);
     }
 
 

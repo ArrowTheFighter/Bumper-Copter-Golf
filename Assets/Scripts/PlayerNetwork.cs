@@ -24,6 +24,8 @@ public class PlayerNetwork : NetworkBehaviour
     bool CanJump = true;
     bool Jumping;
     float jumpCooldown;
+    public bool chargingShot;
+    float chargeShotDuration;
     
     public PlayerDroneModel droneModel;
     
@@ -46,6 +48,7 @@ public class PlayerNetwork : NetworkBehaviour
         networkObject = GetComponent<NetworkObject>();
         if (IsOwner)
         {
+            Cursor.lockState = CursorLockMode.Locked;
             Camera.SetActive(true);
             transform.position = LevelHandler.instance.GetSpawnPosition();
             SpawnGolfBallServerRpc();
@@ -64,6 +67,7 @@ public class PlayerNetwork : NetworkBehaviour
         ulong clientid = rpcParams.Receive.SenderClientId;
         ReturnBallReferenceClientRpc(spawnedNetowrkObj.NetworkObjectId,
         new ClientRpcParams { Send = new ClientRpcSendParams { TargetClientIds = new ulong[] { clientid } } });
+        spawnedTransform.GetComponent<BallNetwork>().SetBallColorClientRpc(clientid);
     }
 
     [ClientRpc]
@@ -90,12 +94,19 @@ public class PlayerNetwork : NetworkBehaviour
         if (!IsOwner) return;
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.LeftShift))
         {
+            chargeShotDuration = 0;
+            launchVelocity = 0;
+            chargingShot = true;
+        }
+        if (Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.LeftShift))
+        {
             TryHitBall();
+            chargingShot = false;
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
-         }
+        }
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -178,20 +189,29 @@ public class PlayerNetwork : NetworkBehaviour
         
         LaunchStrengthUpdate();
     }
-    
-    void LaunchStrengthUpdate() {
-        
-        float scrollAmount = Input.GetAxis("Mouse ScrollWheel");
-        
+
+    void LaunchStrengthUpdate()
+    {
+
+        if (!chargingShot) return;
+        chargeShotDuration += Time.fixedDeltaTime * 2;
+        //float scrollAmount = Input.GetAxis("Mouse ScrollWheel");
+
         float oldLaunchStrength = launchStrength;
-        
-        launchStrength += scrollAmount * launchStrengthIncrement;
+
+        //launchStrength += scrollAmount * launchStrengthIncrement;
+        launchStrength = chargeShotDuration;
         launchStrength = Mathf.Clamp(launchStrength, 0, maxLaunchStrength);
-        
-        if (oldLaunchStrength != launchStrength) {
+        if (launchStrength + 0.01f > maxLaunchStrength)
+        {
+            launchStrength = 2;
+         }
+
+        if (oldLaunchStrength != launchStrength)
+        {
             Debug.Log("Launch strength: " + launchStrength);
         }
-        
+
         launchVelocity = Mathf.Sqrt(launchStrength) * 10;
 
     }

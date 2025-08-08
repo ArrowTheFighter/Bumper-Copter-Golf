@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 7299736136286113133}
   - component: {fileID: 1478738777389908685}
   - component: {fileID: 6797928826083997442}
+  - component: {fileID: 5684111979138983881}
   m_Layer: 6
   m_Name: GolfBall
   m_TagString: Untagged
@@ -247,5 +248,19 @@ MonoBehaviour:
   WaterLayer:
     serializedVersion: 2
     m_Bits: 16
-  groundDampening: 5
-  dampTime: 2
+  groundDampening: 4
+  dampTime: 12
+  playerNetwork: {fileID: 0}
+--- !u!114 &5684111979138983881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2185557510102880579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab64055a1b353444ea1f173f8c343a0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorNum: 0

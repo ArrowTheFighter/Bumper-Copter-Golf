@@ -12,6 +12,7 @@ public class BallNetwork : NetworkBehaviour
     public PlayerNetwork playerNetwork;
     float TimeWhenHitGround;
     float fullDampTime;
+    int score = 0;
 
     bool inAir;
     Vector3 lastPosition;
@@ -20,13 +21,23 @@ public class BallNetwork : NetworkBehaviour
     {
         rb = GetComponent<Rigidbody>();
         
-        Invoke("UpdateBallColor", 0.1f);
+        //Invoke("UpdateBallColor", 0.1f);
     }
     
     private void UpdateBallColor() {
         Material mat = GetComponent<MeshRenderer>().material;
         if (mat.HasColor("_BaseColor") && GetComponent<PlayerColor>() != null) {
-            mat.SetColor("_BaseColor", GetComponent<PlayerColor>().GetColor());
+            mat.SetColor("_BaseColor", GetComponent<PlayerColor>().GetColor(playerNetwork.OwnerClientId));
+        }
+    }
+
+    [ClientRpc]
+    public void SetBallColorClientRpc(ulong colorID)
+    {
+        Material mat = GetComponent<MeshRenderer>().material;
+        if (mat.HasColor("_BaseColor") && GetComponent<PlayerColor>() != null)
+        {
+            mat.SetColor("_BaseColor", GetComponent<PlayerColor>().GetColor(colorID));
         }
     }
 
@@ -84,10 +95,18 @@ public class BallNetwork : NetworkBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (playerNetwork == null) return;
+        if (!playerNetwork.IsOwner) return;
         if (other.tag == "Goal")
         {
             print("entered goal");
-         }
+            score++;
+            LevelHandler.instance.score.text = "Score: " + score;
+            if (other.TryGetComponent(out GoalScript goalScript))
+            {
+                LevelHandler.instance.DisableGoalServerRpc(goalScript.goalID);
+            }
+        }
     }
 
     void OnTriggerExit(Collider other)

@@ -7,7 +7,8 @@ using TMPro;
 public class LobbyNetworkHandler : MonoBehaviour
 {
     public UnityTransport unityTransport;
-    public TMP_InputField inputField;
+    public TMP_InputField AddressInputField;
+    public TMP_InputField PortInputField;
     public Button HostLobbyButton;
     public Button JoinLobbyButton;
     public Button StartGameButton;
@@ -24,13 +25,14 @@ public class LobbyNetworkHandler : MonoBehaviour
     {
         HostLobbyButton.onClick.AddListener(() =>
         {
+            unityTransport.SetConnectionData(AddressInputField.text, ushort.Parse(PortInputField.text));
             NetworkManager.Singleton.StartHost();
             StartUI.SetActive(false);
             LobbyUI.SetActive(true);
         });
         JoinLobbyButton.onClick.AddListener(() =>
         {
-            unityTransport.SetConnectionData(inputField.text, 7777);
+            unityTransport.SetConnectionData(AddressInputField.text, ushort.Parse(PortInputField.text));
             NetworkManager.Singleton.StartClient();
             StartUI.SetActive(false);
             LobbyUI.SetActive(true);
